@@ -49,8 +49,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px; /* Increase size */
-    height: 300px; /* Increase size */
+    width: 300px;
+    height: 300px;
     perspective: 1000px;
 }
 
@@ -89,6 +89,7 @@ body {
     box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
 }
 
 .flip-card-front {
@@ -113,6 +114,70 @@ body {
 .flip-card-back h2,
 .flip-card-back p {
     margin: 5px 0;
-    font-size: 14pt; /* Increase text size */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Adding a border-like shadow to text */
+    font-size: 14pt;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+#sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 30%;
+    height: 100%;
+    background-color: #191414;
+    color: #1DB954;
+    overflow-y: auto;
+    padding: 20px;
+    display: none;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+}
+
+#sidebar h2 {
+    margin-top: 0;
+}
+
+#sidebar .tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+#sidebar .tab {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #1DB954;
+    color: #191414;
+    border-radius: 5px;
+}
+
+#sidebar .tab.active {
+    background-color: #191414;
+    color: #1DB954;
+    border: 1px solid #1DB954;
+}
+
+#sidebar .content {
+    display: none;
+}
+
+#sidebar .content.active {
+    display: block;
+}
+
+#sidebar img {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+#sidebar .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #1DB954;
+    color: #191414;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
 }

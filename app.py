@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, session, render_template
+from flask import Flask, request, redirect, session, render_template, jsonify
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy
 import os
@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 from PIL import Image
 from io import BytesIO
 import requests
+
+from src.wikipedia import get_wikipedia_info
 
 load_dotenv(dotenv_path='keys.env')
 SPOTIPY_CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
@@ -117,6 +119,17 @@ def create_collage():
     albums_info.sort(key=lambda x: x['most_listened_track'], reverse=True)  # Sort by most listened to track
 
     return render_template('collage.html', albums=albums_info, user_name=session.get('user_name'), user_image=session.get('user_image'))
+
+@app.route('/get_wikipedia_info', methods=['POST'])
+def get_wikipedia_info_endpoint():
+    data = request.json
+    query = data.get('query')
+    
+    if not query:
+        return jsonify({'error': 'No query provided'}), 400
+
+    info = get_wikipedia_info(query)
+    return jsonify(info)
 
 if __name__ == '__main__':
     app.run(debug=True)

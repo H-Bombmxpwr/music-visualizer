@@ -4,19 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ user_name }}'s Albums</title>
+    <title>{{ user_name }}'s Music</title>
     {% if user_image %}
     <link rel="icon" href="{{ user_image }}">
     {% endif %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mosaic.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/wikipedia.js') }}"></script>
 </head>
 <body>
     <div class="header">
-        <h1>{{ user_name }} <img src="{{ user_image }}" class="user-icon" alt="User Icon"> Albums</h1>
+        <h1>{{ user_name }} <img src="{{ user_image }}" class="user-icon" alt="User Icon"> Music</h1>
     </div>
     <div class="mosaic-container">
         {% for album in albums %}
-        <div class="poster">
+        <div class="poster" onmouseover="fetchWikipediaInfo('{{ album.most_listened_track }}', '{{ album.name }}', '{{ album.artist }}')">
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front" style="background-image: url('{{ album.image_url }}');"></div>
@@ -30,6 +32,30 @@
             </div>
         </div>
         {% endfor %}
+    </div>
+
+    <div id="sidebar">
+        <button class="close-btn" onclick="closeSidebar()">Close</button>
+        <div class="tabs">
+            <div class="tab active" data-content="song">Song</div>
+            <div class="tab" data-content="album">Album</div>
+            <div class="tab" data-content="artist">Artist</div>
+        </div>
+        <div id="song" class="content active">
+            <h2>Song Info</h2>
+            <p id="song-info"></p>
+            <div id="song-images"></div>
+        </div>
+        <div id="album" class="content">
+            <h2>Album Info</h2>
+            <p id="album-info"></p>
+            <div id="album-images"></div>
+        </div>
+        <div id="artist" class="content">
+            <h2>Artist Info</h2>
+            <p id="artist-info"></p>
+            <div id="artist-images"></div>
+        </div>
     </div>
 </body>
 </html>
