@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_name }}'s Albums</title>
+    {% if user_image %}
+    <link rel="icon" href="{{ user_image }}">
+    {% endif %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mosaic.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>{{ user_name }} <img src="{{ user_image }}" class="user-icon" alt="User Icon"> Albums</h1>
+    </div>
+    <div class="mosaic-container">
+        {% for album in albums %}
+        <div class="poster">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front" style="background-image: url('{{ album.image_url }}');"></div>
+                    <div class="flip-card-back" style="background-color: {{ album.dominant_color }};">
+                        <h2 style="color: {{ album.text_color }};">{{ album.name }}</h2>
+                        <p style="color: {{ album.text_color }};">Artist: {{ album.artist }}</p>
+                        <p style="color: {{ album.text_color }};">Most Listened Track: {{ album.most_listened_track }}</p>
+                        <p style="color: {{ album.text_color }};">Year: {{ album.release_year }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
